@@ -301,18 +301,15 @@ call_chr_preprocessor(Preprocessor,_,_) :-
                  *******************************/
 
 :- multifile
-    user:message_hook/3,
+    prolog:message_action/2,
     chr:debug_event/2,
     chr:debug_interact/3.
-:- dynamic
-    user:message_hook/3.
 
-user:message_hook(trace_mode(OnOff), _, _) :-
+prolog:message_action(trace_mode(OnOff), _) :-
     (   OnOff == on
     ->  chr_trace
     ;   chr_notrace
-    ),
-    fail.                           % backtrack to other handlers
+    ).
 
 :- public
     debug_event/2,
