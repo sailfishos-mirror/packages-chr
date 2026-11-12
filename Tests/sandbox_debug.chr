@@ -1,0 +1,12 @@
+:- module(sandbox_debug, [sandbox_debug/0]).
+:- use_module(library(chr)).
+:- use_module(library(sandbox)).
+
+%   The commands of the CHR debugger must not be callable from sandboxed
+%   code: `break` runs break/0, which gives a toplevel that is not
+%   sandboxed.
+
+sandbox_debug :-
+	\+ catch(safe_goal(chr_runtime:handle_debug_command(break, _, _)),
+		 _, fail),
+	\+ catch(safe_goal(chr_runtime:ask_continue(_)), _, fail).

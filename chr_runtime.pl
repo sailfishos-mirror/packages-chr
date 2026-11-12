@@ -1012,5 +1012,9 @@ set_chr_debug(State) :-
 :- multifile
 	sandbox:safe_primitive/1.
 
-sandbox:safe_primitive(chr_runtime:handle_debug_command(_,_,_)).
-sandbox:safe_primitive(chr_runtime:ask_continue(_)).
+%   The CHR debugger is only active if chr_trace/0 was called, which is
+%   not allowed in the sandbox.  Do not declare its commands safe: the
+%   `break` command runs break/0, which gives a toplevel that is not
+%   sandboxed.
+
+sandbox:safe_primitive(chr_runtime:'chr debug_event'(_)).
