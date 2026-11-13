@@ -11,7 +11,7 @@
 		arg(Index,Table,Bucket),
 		nonvar(Bucket),
 		( Bucket = K-Vs ->
-		    K == Key,	
+		    K == Key,
 		    Values = Vs
 		;
 		    lookup(Bucket,Key,Values)
@@ -42,13 +42,13 @@ pl_lookup_ht1(term_t ht, term_t pl_hash, term_t key, term_t values)
 
   /* Index is (Hash mod Capacity) + 1 */
   PL_get_integer(pl_hash, &hash);
-  index = (hash % capacity) + 1;  
+  index = (hash % capacity) + 1;
 
   /* arg(Index,Table,Bucket) */
   PL_get_arg(index, table, bucket);
 
-  /* nonvar(Bucket) */ 
-  if (PL_is_variable(bucket)) PL_fail;  
+  /* nonvar(Bucket) */
+  if (PL_is_variable(bucket)) PL_fail;
 
   if (PL_is_list(bucket)) {
   	term_t pair	     = PL_new_term_ref();
@@ -67,7 +67,7 @@ pl_lookup_ht1(term_t ht, term_t pl_hash, term_t key, term_t values)
   	term_t k	     = PL_new_term_ref();
 	term_t vs	     = PL_new_term_ref();
   	PL_get_arg(1, bucket, k);
-        /* K == Key */	
+        /* K == Key */
 	if ( PL_compare(k,key) == 0 ) {
       		/* Values = Vs */
 		PL_get_arg(2, bucket, vs);
@@ -90,7 +90,7 @@ pl_memberchk_eq(term_t element, term_t maybe_list)
      PL_succeed ;
   }
 
-  PL_fail;  
+  PL_fail;
 
 }
 
